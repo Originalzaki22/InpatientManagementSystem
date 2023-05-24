@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
+<script type="text/ecmascript" src="js/jquery.js"></script>
+<script type="text/ecmascript" src="js/js.js"></script>
+</head>
+
+<body>
+<div id="caption">
+ rahama nursing home clinic 
+</div>
+<div id="menu">
+<ul>
+<?php 
+ require_once('config/conn.php');
+if(isset($_SESSION['userLogin'])){
+	 if($_SESSION['userLogin']==4){ echo'
+<li><a href="registration.php">Home</a></li>
+<li><a href="registration.php?p=news">New Registration</a></li>
+<li><a href="registration.php?p=update">Visit Doctor</a></li>
+<li><a href="registration.php?p=record">Record</a></li>
+<li><a href="logout.php">Log out</a></li>';
+}elseif($_SESSION['userLogin']==1){
+
+ echo'
+<li><a href="administration.php">Home</a></li>s
+<li><a href="administration.php?p=staff">Staff</a></li>
+<li><a href="administration.php?p=doctor">Doctors</a></li>
+<li><a href="administration.php?p=nurse">Nurse</a></li>
+<li><a href="administration.php?p=word">Add Word</a></li>
+<li><a href="administration.php?p=patient">Patient</a></li>
+<li><a href="logout.php">Log out</a></li>';
+}elseif($_SESSION['userLogin']==2){
+if(!isset($_SESSION['patient_id'])){
+	echo'<li><a href="doctors.php">Home</a></li>';
+}else{
+	echo 
+	'<li><a href="doctors.php?p=diagnose">Diagnose</a></li>
+	<li><a href="doctors.php?p=Prescriptionss">Prescriptionss</a></li>
+<li><a href="doctors.php?p=record">record</a></li>
+<li><a href="doctors.php?p=test">Test</a></li>
+<li><a href="doctors.php?p=result">Test Result</a></li>
+<li><a href="set_patient.php">Set Patient</a></li>';
+
+
+	$query=mysql_query("SELECT * FROM admission WHERE patient_id='".$_SESSION['patient_id']."' AND status='1'");
+	$count=mysql_num_rows($query);
+	if($count > 0){
+		echo '<li><a href="doctors.php?p=discharge">Discharge</a></li>';
+		}else{
+			echo '<li><a href="doctors.php?p=admit">admit</a></li>';
+		}
+}
+ echo'
+<li><a href="logout.php">Log out</a></li>';
+}elseif($_SESSION['userLogin']==3){
+	
+	
+}elseif($_SESSION['userLogin']==5){
+	if(!isset($_SESSION['patient_id'])){
+	echo'<li><a href="Laboratory.php">Home</a></li>';
+}else{
+	echo '<li><a href="Laboratory.php?p=test&tid='.$_SESSION['test_no'].'">Test</a></li>
+<li><a href="Laboratory.php?p=result&tid='.$_SESSION['test_no'].'">Test Result</a></li>
+<li><a href="set_patient2.php">Set Patient</a></li>
+
+';
+	
+}
+	echo'<li><a href="logout.php">Log out</a></li>';
+	
+}
+
+}?>
+</ul>
+
+</div>
+ 
+ 
